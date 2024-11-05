@@ -6,11 +6,9 @@
 <div class="m-page">
     <p-toast position="top-right" key="tr"></p-toast>
     <div class="container-fluid">
-        <!-- Title Row -->
         <div class="row m-page__title text-center">
             <h5 class="w-100">Weather Dashboard</h5>
         </div>
-
         <div class="row py-5">
             <div class="col-md-5 col-lg-5 mb-4">
                 <form [formGroup]="userForm" (submit)="_doAtmosphereDetails($event)">
@@ -104,16 +102,12 @@
                                 <p>Humidity:{{ currentWeather.main.humidity }}%</p>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
-
             <div class="col-md-7 col-lg-7" *ngIf="!currentWeather">
                 <img src="../../assets/Images/nodata.webp" alt="No Data Found" class="fit-image" >
             </div>
-
         </div>
     </div>
 </div>
