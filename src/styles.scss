@@ -1,1 +1,84 @@
 /* You can add global styles to this file, and also import other style files */
+
+@font-face {
+    font-family: "OpenSans-Regular", sans-serif;
+    src: url("assets/fonts/Open_Sans/OpenSans-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "OpenSans-Light", sans-serif;
+    src: url("assets/fonts/Open_Sans/OpenSans-Light.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "OpenSans-Bold", sans-serif;
+    src: url("assets/fonts/Open_Sans/OpenSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "OpenSans-SemiBold", sans-serif;
+    src: url("assets/fonts/Open_Sans/OpenSans-SemiBold.ttf") format("truetype");
+}
+
+
+body {
+    font-family: "OpenSans-Regular", sans-serif;
+    margin: 0px !important;
+    padding: 0px !important;
+    box-sizing: border-box;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+$name: m-page;
+$selector: ".#{$name}";
+
+#{$selector} {
+  //  background: #d3d3d3;
+    &__title {
+        background:#1976d2;
+        padding: 10px;
+
+
+        h5 {
+            color: #fff;
+            margin: 0px !important;
+        }
+    }
+
+    &__input {
+        width: 100% !important;
+        width: 100% !important;
+        padding: 6px;
+        border-radius: 5px;
+    }
+    &__weatherreport{
+        background: #1976d2;
+        border-radius: 15px;
+        color:#fff;
+
+        h5{
+            font-size: 15px;
+        }
+    }
+    &__weathreforecast{
+
+    }
+
+
+}
+
+.spinner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.7); /* Optional overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050; /* Ensure it's above other content */
+  }

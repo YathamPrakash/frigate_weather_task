@@ -1,0 +1,119 @@
+<div *ngIf="isLoading" class="spinner-overlay">
+    <p-progressSpinner></p-progressSpinner>
+</div>
+
+
+<div class="m-page">
+    <p-toast position="top-right" key="tr"></p-toast>
+    <div class="container-fluid">
+        <!-- Title Row -->
+        <div class="row m-page__title text-center">
+            <h5 class="w-100">Weather Dashboard</h5>
+        </div>
+
+        <div class="row py-5">
+            <div class="col-md-5 col-lg-5 mb-4">
+                <form [formGroup]="userForm" (submit)="_doAtmosphereDetails($event)">
+                    <div class="d-flex">
+                        <div>
+                            <Strong>Select</Strong>
+                            <select class="form-select" aria-label="Default select example"
+                                formControlName="selectsearchparam" (change)="_doEmptySearch($event)">
+                                <option value="Location">Location</option>
+                                <option value="City">City</option>
+                                <option value="Zip Code">Zipcode</option>
+                                <option value="Geo Graphical Coordinates">Geo graphical Coordinates</option>
+                            </select>
+
+                        </div>
+                        <div class="ms-4"
+                            *ngIf="this.userForm.get('selectsearchparam').value !='Geo Graphical Coordinates'">
+                            <Strong>{{this.userForm.get('selectsearchparam').value}}</Strong>
+                            <input type="text" placeholder="Search by location" class="w-100 mb-2 py-1 "
+                                formControlName="userSearchLocation" />
+                            <div *ngIf="this.userForm.get('userSearchLocation').errors && isSubmitted">
+                                <span class="text-danger"
+                                    *ngIf="this.userForm.get('userSearchLocation').errors.required">Please enter the
+                                    field</span>
+                            </div>
+                        </div>
+                        <div *ngIf="this.userForm.get('selectsearchparam').value =='Geo Graphical Coordinates'">
+                            <Strong>Lat</Strong>
+                            <input type="number" placeholder="Search by location" class="form-control mb-2"
+                                formControlName="userLatitude" />
+                            <div *ngIf="this.userForm.get('userLatitude').errors && isSubmitted">
+                                <span class="text-danger"
+                                    *ngIf="this.userForm.get('userLatitude').errors.required">Please enter the
+                                    Latitude</span>
+                            </div>
+                            <Strong>Long</Strong>
+                            <input type="number" placeholder="Search by location" class="form-control mb-2"
+                                formControlName="userLongitue" />
+                            <div *ngIf="this.userForm.get('userLongitue').errors && isSubmitted">
+                                <span class="text-danger"
+                                    *ngIf="this.userForm.get('userLongitue').errors.required">Please enter the
+                                    Longitue</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex g-3">
+                        <button type="submit" name="search" class="btn btn-primary w-100 my-2 me-2">Search</button>
+                        <button type="submit" name="reset" class="btn btn-secondary w-100 my-2">Reset</button>
+                    </div>
+                </form>
+                <div class="my-2" *ngIf="currentWeather">
+                    <div class="d-flex align-items-center">
+                        <Strong>Temperature(°C/°F):</Strong>
+                        <span class="me-2">Celsius</span> <!-- Left label -->
+                        <p-inputSwitch [(ngModel)]="checked" (onChange)="onSwitchChange($event)"></p-inputSwitch>
+                        <span class="ms-2">Fahrenheit</span> <!-- Right label -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weather Report Section -->
+            <div class="col-md-7 col-lg-7" *ngIf="currentWeather">
+                <div class="m-page__weatherreport d-flex justify-content-between align-items-center p-3 rounded">
+                    <div>
+                        <h4>{{currentWeather.name }}</h4>
+                        <h5>Temparature:{{ currentWeather.main.temp }}{{units == 'metric'?"°C":"°F"}}</h5>
+                        <h5>Wind: {{ currentWeather.main.pressure }}m/s</h5>
+                        <h5>Humidity: {{ currentWeather.main.humidity }}%</h5>
+                    </div>
+                    <div class="text-center">
+                        <img [src]="getWeatherIcon(currentWeather.weather[0].icon)" alt="Weather Icon" height="100px"
+                            width="100px">
+                        <p>{{currentWeather.weather[0].description}}</p>
+                    </div>
+                </div>
+
+                <!-- 5-Day Forecast -->
+                <div class="m-page__weatherforecast mt-4">
+                    <h4 class="py-2">5-Day Forecast</h4>
+                    <div class="row g-3">
+                        <div class="col-md-3 col-sm-3 col-xs-6" *ngFor="let data of forecast">
+                            <div class="card text-center p-3  mb-3">
+                                <h5>{{data.Date}}</h5>
+                                <img [src]="getWeatherIcon(data.weather[0].icon)" alt="Weather Icon" height="80px"
+                                    width="100px">
+                                <div>
+                                    <span>{{data.weather[0].description}}</span>
+                                </div>
+                                <p>Temperature:{{ currentWeather.main.temp}} {{units == 'metric'?"°C":"°F"}}</p>
+                                <p>Wind:{{ currentWeather.main.pressure }} m/s</p>
+                                <p>Humidity:{{ currentWeather.main.humidity }}%</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-7 col-lg-7" *ngIf="!currentWeather">
+                <img src="../../assets/Images/nodata.webp" alt="No Data Found" class="fit-image" >
+            </div>
+
+        </div>
+    </div>
+</div>
